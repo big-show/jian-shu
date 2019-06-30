@@ -1,7 +1,7 @@
 # jian-shu
 A website imitate jian shu
 
-#简书网站，实现了登录，写文章权鉴，查看详情文章，轮播，ajax交互，点赞，更新热词及作者的功能
+简书网站，实现了登录，写文章权鉴，查看详情文章，轮播，ajax交互，点赞，更新热词及作者的功能
 
 
 his project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
