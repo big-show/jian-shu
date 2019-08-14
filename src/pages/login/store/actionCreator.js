@@ -15,6 +15,7 @@ export const handleLogin=(account,password)=>((dispatch)=>
     alert('登录失败')
 })}
 );
+//logout在主页面被使用，退出登录
 export const handleLogout=()=>({
    type:actionType.LOGOUT,
    logState:false

@@ -10,6 +10,7 @@ const getLoadList=(list,page)=>({
     list:fromJS(list),
     page
 });
+//处理点赞
 export const getLikeClick=(id,like,state)=>
 {
     return{
@@ -27,6 +28,7 @@ export const getWriterSwitch=(list,writerPage,writerTotalPage,writerSwitchState)
         writerSwitchState:writerSwitchState===true?false:true
     }
 };
+//获取的是页数，数据存储在了本地
 export const getInitHomeInfo=()=>((dispatch)=>{
     axios.get('/api/home.json').then((res)=>{
         const data=res.data.data;
@@ -36,6 +38,7 @@ export const getInitHomeInfo=()=>((dispatch)=>{
         }
     )
 });
+//如果想获得更多的文字，就需要axios进行异步获取。
 export const getMoreArticleList=(page)=>((dispatch)=>{
     axios.get('/api/articleList.json?page='+page).then((res)=>{
         const data=res.data.data;

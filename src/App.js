@@ -19,6 +19,7 @@ class App extends Component {
                 <Provider store={store}>
                         <HashRouter>
                             <div>
+                                {/*路径是/时显示两个组件*/}
                                 <Route path='/' exact component={Header}></Route>
                                 <Route path='/' exact component={Home}></Route>
                                 <Route path='/detail/:id' exact component={Detail}></Route>

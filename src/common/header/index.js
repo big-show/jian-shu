@@ -25,15 +25,18 @@ import {
 
 class Header extends Component
 {
+    //是否显示searchInfo内容的函数。
     showNavSearchInfo(){
         const{list,page,totalPage,focused,iconSwitchState,mouseIn,handleMouseIn,handleMouseOut,handleClickSwitch} =this.props;
         const newList=list.toJS();
         const showList=[];
+        //将Item存入showList中
         if(newList.length!==0) {
             for (let i = page * 10; i < (page + 1) * 10; i++) {
                 showList.push(<NavSearchInfoItem key={newList[i]}>{newList[i]}</NavSearchInfoItem>)
             }
         }
+        //在点击inputfocues或者鼠标在showNavSearch内容区是显示Info
         if (focused === true||mouseIn===true) {
             return (
                 <NavSearchInfoWrapper
@@ -70,6 +73,7 @@ class Header extends Component
                 <Logo />
                 </Link>
                 <Nav>
+                    {/*showState:用来判断是否在宽度比较小的情况下显示自适应的内容，listBar在宽度大于900是不显示的*/}
                     <i className='iconfont listBar' onClick={()=>showContent(showState)}>&#xea0d;</i>
                     <NavItem className='left active' href='/'>首页</NavItem>
                     <NavItem className='left ' href='/'>下载App</NavItem>
@@ -78,6 +82,7 @@ class Header extends Component
                             <Link to='/login'><NavItem className='right' href='/' >登录</NavItem></Link>
                     }
                     <NavItem className='right' href='/'><i className='iconfont zoom'>&#xe636;</i></NavItem>
+                    {/*NavSearchWrapper在宽度小于900时display：none，上面的i显示，下面的DropDwonContent也可以点击*/}
                     <NavSearchWrapper>
                         <CSSTransition
                             in={focused}
@@ -104,6 +109,7 @@ class Header extends Component
                     </Link>
                     <Button className='left'>注册</Button>
                 </Addition>
+                {/*//dropDownContent显示的是在宽度较小时，点击i时，显示自适应的内容*/}
                 <DropDownContent className={showState?'showContent':''}>
                     <NavItem className='left active show' href='/'>首页</NavItem>
                     <NavItem className='left show ' href='/'>下载App</NavItem>
@@ -116,6 +122,8 @@ class Header extends Component
                             <NavSearch
                                 className='showSearch'
                                 onFocus={()=>{handleInputFocus(list)}}
+                                //当失去焦点时，设置focused为false
+
                                 onBlur={handleInputBlur}
                             />
                         </CSSTransition>
@@ -136,7 +144,7 @@ const mapStateToProps = (state) => {
         list:state.get('header').get('list'),
         mouseIn:state.get('header').get('mouseIn'),
         page:state.getIn(['header','page']),
-        totalPage:state.getIn(['header','totalPage']),
+        totalPloginStateage:state.getIn(['header','totalPage']),
         loginState:state.getIn(['login','login']),
         showState:state.getIn(['header','showContent']),
         iconSwitchState:state.getIn(['header','iconSwitch']),
@@ -144,23 +152,27 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
+        //input框focus时，加载listItem列表，也就是热点列表，如果有了list列表，就设置focused为true，进行显示
         handleInputFocus(list) {
             (list.size===0)&& dispatch(actionCreators.getList());
             dispatch(actionCreators.getInputFocus());
         },
+        //设置focused为false，取消listItem的显示
         handleInputBlur() {
             dispatch(actionCreators.getInputBlur());
         },
+        //鼠标移入listItem区域，mouseIn设为true，显示listItem
         handleMouseIn(){
             dispatch(actionCreators.getMouseIn());
         },
+        //鼠标移入listItem区域，mouseIn设为false，不显示显示listItem
         handleMouseOut()
         {
             dispatch(actionCreators.getMouseOut())
         },
+        //点击换一换，加载下一组listItem数据
         handleClickSwitch(page,totalPage,iconSwitchState)
         {
-
            /* let rotateAngle=spin.style.transform.replace(/[^0-9]/ig,'');
             if(rotateAngle)
             {
@@ -184,6 +196,7 @@ const mapDispatchToProps = (dispatch) => {
         logout() {
             dispatch(loginActionCreator.handleLogout())
         },
+        //点击宽度小于900时的目录图标，对dropDwom内容显示与否设置toggle
         showContent(showState){
             if(showState)
             dispatch(actionCreators.getShowContent(false));

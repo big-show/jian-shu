@@ -28,6 +28,7 @@ class ArticleList extends PureComponent{
                         </ListItem>
                     )
                 )}
+                {/*点击可以异步获取更多文章*/}
                 < LoadMore onClick={()=>getLoadMoreList(page)}>
                 阅读更多
                 </LoadMore>

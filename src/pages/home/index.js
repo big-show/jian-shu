@@ -43,6 +43,7 @@ class home extends Component {
                         <Recommends/>
                         <Writers/>
                     </PageRight>
+                    {/*回到首页组件何时显示，scrollToTop为ture时显示出来，点击时跳到最上面*/}
                     {this.props.scrollToTop?<Backtop onClick={this.handleScrollTop}><i className='iconfont'>&#xe61f;</i></Backtop>:null}
                 </PageWrapper>
             </div>
@@ -51,8 +52,10 @@ class home extends Component {
 
     componentDidMount() {
         this.props.getHomeInfo();
+        //页面加载完毕绑定回到top滚动事件。
         this.bindEvent();
     }
+    //监听scroll，触发BackTopShow函数。可以用防抖来优化
     bindEvent()
     {
         window.addEventListener("scroll", this.props.changeBackTopShow)
@@ -66,9 +69,11 @@ const mapDispatchToProps = (dispatch) => ({
     getHomeInfo() {
         dispatch(actionCreator.getInitHomeInfo());
     },
+    //
     changeBackTopShow()
     {
         const scrollTop=document.documentElement.scrollTop;
+        //判断滚动高度超过100就要触发显示backTop图标
         (scrollTop<100)?dispatch(actionCreator.getScrollTop(false)):dispatch(actionCreator.getScrollTop(true));
     }
 });

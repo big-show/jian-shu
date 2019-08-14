@@ -225,7 +225,7 @@ export const Button = styled.div`
     }
 `;
 export const DropDownContent=styled.div`
-     &.showContent{
+     &.{
         display:block;
      }   
      display:none;
@@ -237,7 +237,7 @@ export const DropDownContent=styled.div`
      .show
      {
             display:inline-block;
-            height: 56px;
+            height: 56px;showContent
             line-height: 26px;
             padding: 15px;
             width:100%;
